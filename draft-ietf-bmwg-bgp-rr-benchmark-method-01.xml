@@ -227,20 +227,24 @@ Another important consideration is the behaviour of any testing devices being ut
       <t>
 The profile of the routing information that is used may result in wildly different results depending on the Route-Reflectors internal implementations of the BGP protocol.  In order to provide meaningful results that can be used for accurate benchmarking of Route-Reflector implementations against one and other and to provide results capable of relating to real world deployments of the DUT there are a number of specific route profiles that should be tested.
 
-IPv4
-	Synthetic
-	Global Internet Table
-IPv6
-	Synthetic
-	Global Internet Table
-VPNv4
-	Synthetic with RD per ASN (With and without RT constraint?)
-	Synthetic with RD per Router-ID (With and without RT constraint?)
-VPNv6
-	Synthetic with RD per ASN (With and without RT constraint?)
-	Synthetic with RD per Router-ID (With and without RT constraint?)
-	
-
+<list style="symbols">
+<t>IPv4 <list style="symbols">
+	<t>Synthetic</t>
+	<t>Global Internet Table</t>
+	</list></t>
+<t>IPv6 <list style="symbols">
+	<t>Synthetic</t>
+	<t>Global Internet Table</t>
+	</list></t>
+<t>VPNv4 <list style="symbols">
+	<t>Synthetic with RD per ASN (With and without RT constraint?)</t>
+	<t>Synthetic with RD per Router-ID (With and without RT constraint?)</t>
+	</list></t>
+<t>VPNv6 <list style="symbols">
+	<t>Synthetic with RD per ASN (With and without RT constraint?)</t>
+	<t>Synthetic with RD per Router-ID (With and without RT constraint?)</t>
+	</list></t>
+</list>
 
       </t>
       </section>
