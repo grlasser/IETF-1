@@ -261,6 +261,14 @@ The profiles that should be tested are
 	</list></t>
 </list>
 
+The profiles should be tested individually and then in groups where the groupings are as follows
+
+<list style="symbols">
+<t>IPv4+IPv6</t>
+<t>VPNv4+VPNv6</t>
+<t>IPv4+IPv6+VPNv4+VPNv6</t>
+</list>
+
       </t>
       </section>
       
@@ -272,6 +280,9 @@ The profiles that should be tested are
       <t>Where they are processing multiple sets of updates from a number of iBGP neighbours and reflecting them to multiple iBGP clients</t>
       </list>
       </t>
+      
+      
+      
       
       
       
