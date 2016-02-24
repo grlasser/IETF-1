@@ -261,7 +261,7 @@ The profiles that should be tested are
 	</list></t>
 </list>
 
-The profiles should be tested individually and then in groups where the groupings are as follows
+The profiles should be tested individually and then in groups where the groupings are as follows.
 
 <list style="symbols">
 <t>IPv4+IPv6</t>
