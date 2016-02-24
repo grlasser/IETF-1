@@ -326,6 +326,66 @@ The profiles should be tested individually and then in groups where the grouping
       
 		</t>
     </section>
+    
+    <section title="Results Matrix">
+    <texttable anchor="results_matrix" title="Results Matrix">
+          <preamble>This table should be used to provide the results of each Route-Reflector tested</preamble>
+
+          <ttcol align="center">Address-Family</ttcol>
+          <ttcol align="center">Route-Profile</ttcol>
+          <ttcol align="center">RD Type</ttcol>
+          <ttcol align="center">Standing/Cold Start</ttcol>
+          <ttcol align="center">1</ttcol>
+          <ttcol align="center">10</ttcol>
+          <ttcol align="center">50</ttcol>
+          <ttcol align="center">100</ttcol>
+          <ttcol align="center">250</ttcol>
+          <ttcol align="center">1000</ttcol>
+          <ttcol align="center">2500</ttcol>
+          <ttcol align="center">5000</ttcol>
+
+<c>IPv4</c><c>Synth</c><c></c><c>SS</c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c>
+<c>IPv4</c><c>Synth</c><c></c><c>CS</c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c>
+<c>IPv4</c><c>GIT</c><c></c><c>SS</c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c>
+<c>IPv4</c><c>GIT</c><c></c><c>CS</c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c>
+          
+<c>IPv6</c><c>Synth</c><c></c><c>SS</c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c>
+<c>IPv6</c><c>Synth</c><c></c><c>CS</c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c>
+<c>IPv6</c><c>GIT</c><c></c><c>SS</c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c>
+<c>IPv6</c><c>GIT</c><c></c><c>CS</c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c>
+          
+<c>VPNv4</c><c>Synth</c><c>ASN</c><c>SS</c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c>
+<c>VPNv4</c><c>Synth</c><c>ASN</c><c>CS</c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c>
+<c>VPNv4</c><c>Synth</c><c>R-ID</c><c>SS</c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c>
+<c>VPNv4</c><c>Synth</c><c>R-ID</c><c>CS</c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c>
+          
+<c>VPNv6</c><c>Synth</c><c>ASN</c><c>SS</c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c>
+<c>VPNv6</c><c>Synth</c><c>ASN</c><c>CS</c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c>
+<c>VPNv6</c><c>Synth</c><c>R-ID</c><c>SS</c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c>
+<c>VPNv6</c><c>Synth</c><c>R-ID</c><c>CS</c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c>
+          
+<c>IPv4+IPv6</c><c>Synth</c><c></c><c>SS</c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c>
+<c>IPv4+IPv6</c><c>Synth</c><c></c><c>CS</c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c>
+<c>IPv4+IPv6</c><c>GIT</c><c></c><c>SS</c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c>
+<c>IPv4+IPv6</c><c>GIT</c><c></c><c>CS</c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c>
+
+<c>VPNv4 + VPNv6</c> <c>Synth</c> <c>ASN</c> <c>SS</c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c>
+<c>VPNv4 + VPNv6</c><c>Synth</c><c>ASN</c><c>CS</c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c>
+<c>VPNv4 + VPNv6</c><c>Synth</c><c>R-ID</c><c>SS</c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c>
+<c>VPNv4 + VPNv6</c><c>Synth</c><c>R-ID</c><c>CS</c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c>
+
+<c>IPv4 + IPv6 + VPNv4 + VPNv6</c><c>IPv4/6 Synth + VPNv4/6 Synth</c><c>ASN</c><c>SS</c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c>
+<c>IPv4 + IPv6 + VPNv4 + VPNv6</c><c>IPv4/6 Synth + VPNv4/6 Synth</c><c>ASN</c><c>CS</c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c>
+<c>IPv4 + IPv6 + VPNv4 + VPNv6</c><c>IPv4/6 Synth + VPNv4/6 Synth</c><c>R-ID</c><c>SS</c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c>
+<c>IPv4 + IPv6 + VPNv4 + VPNv6</c><c>IPv4/6 Synth + VPNv4/6 Synth</c><c>R-ID</c><c>CS</c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c>
+<c>IPv4 + IPv6 + VPNv4 + VPNv6</c><c>IPv4/6 GIT + VPNv4/6 Synth</c><c>ASN</c><c>SS</c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c>
+<c>IPv4 + IPv6 + VPNv4 + VPNv6</c><c>IPv4/6 GIT + VPNv4/6 Synth</c><c>ASN</c><c>CS</c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c>
+<c>IPv4 + IPv6 + VPNv4 + VPNv6</c><c>IPv4/6 GIT + VPNv4/6 Synth</c><c>R-ID</c><c>SS</c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c>
+<c>IPv4 + IPv6 + VPNv4 + VPNv6</c><c>IPv4/6 GIT + VPNv4/6 Synth</c><c>R-ID</c><c>CS</c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c>
+
+          <postamble></postamble>
+        </texttable>
+    </section>
 
     <section anchor="simple_list" title="Simple List">
       <t>List styles: 'empty', 'symbols', 'letters', 'numbers', 'hanging',
