@@ -60,17 +60,34 @@
       <organization>Nokia</organization>
       <address>
         <postal>
-          <street>Coldra Woods, Chepstow Road</street>
+          <street>740 Waterside Drive, Aztec West</street>
           <!-- Reorder these if your country does things differently -->
-          <city>Newport</city>
+          <city>Bristol</city>
           <region></region>
-          <code></code>
+          <code>BS32 4UF</code>
           <country>UK</country>
         </postal>
         <email>james.cumming@nokia.com</email>
         <!-- uri and facsimile elements may also be added -->
       </address>
     </author>
+    
+    <author fullname="Gregory Lasserre" initials="G." 
+            surname="Lasserre">
+      <organization>Nokia</organization>
+      <address>
+        <postal>
+          <street>777 E Middlefield Road</street>
+          <!-- Reorder these if your country does things differently -->
+          <city>Mountain View</city>
+          <region>California</region>
+          <code></code>
+          <country>USA</country>
+        </postal>
+        <!-- uri and facsimile elements may also be added -->
+      </address>
+    </author>
+
     
     <author fullname="Gunter Van De Velde" initials="G." 
             surname="Van De Velde">
@@ -116,17 +133,10 @@
          keywords will be used for the search engine. -->
 
     <abstract>
-      <t>BGP is commonly used by Network Operators in order to make the distribution
-      of routing informaion within a network more scalable. With the advent of 
-      Virtualisation, new implementations are emerging to perform the route-reflector 
-      function within a BGP network.
-      This document provides a
-      methodology for benchmarking Route-Reflectors (both Virtualised and Traditional)
-      in order to allow a meaningful
-      comparison between them.
-      The terminology used in this document is described in 
-      draft-ietf-bmwg-bgp-rr-benchmark-terms-01.</t>
+   
+      <t>BGP is commonly used with network operators in order to distribute routing information for both infrastructure routes as well as service routing information.  BGP is used due to its ability to handle high amounts of prefix and path information coupled with additional administrative information, such as communities, in a very scalable and stable manner.  Due to the way iBGP operates it is either necessary to deploy routers in a full iBGP mesh configuration or to introduce a administrative point(s) to distribute the routing information around the network.  These administrative reference points are call Route-Reflectors.  Route-Reflectors have be used for many years, however, with the advent of new technologies such as virtualisation there is a need to be able to benchmark this function is a consistent manner.  This document covers how to provide an accurate BGP route-reflector benchmark.</t>
     </abstract>
+    
   </front>
 
   <middle>
@@ -139,7 +149,7 @@
   		Device Under Test (DUT) is a 'black box' and unknown to the tester.  Each 
   		scenario will be considered to be complete when the Route-Reflector has achieved 
   		convergence, which means it received, processed and completed sending all prefixes
-  		to its neighbours.</t>
+  		to its neighbours.  This benchmark will not include the installation of selected prefixes into the FIB table.</t>
   		<t>The following BGP address-families are in-scope for this
   		document: 
   		<list style="symbols">
@@ -151,6 +161,7 @@
   		Other address-families are excluded to ensure a level of consistency between
   		Route-Reflector implementations.
   	</t>
+  	</section>
 
       <section title="Requirements Language">
         <t>The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
@@ -159,9 +170,13 @@
         target="RFC2119">RFC 2119</xref>.</t>
         <t>Additional Terminology used in this document is defined in 
         <xref target="RFC4098">[RFC4098]</xref> and extended by 
-        draft-ietf-bmwg-bgp-rr-benchmark-terms-01</t>
+        the terminology section of this document</t>
         
       </section>
+      <section title="Terminology">
+      <t>Blah blah blah</t>
+      </section>
+      
       <section title="Physical Test Layout">
        <t>The following diagram details the physical topology for the 
         testing.  The tester devices must be equipped with sufficient resources
@@ -172,29 +187,80 @@
         <figure align="center" anchor="physical_topology">
         <preamble></preamble>
         <artwork align="center"><![CDATA[
-+-------------+          +-------------+          +-------------+
-|             |          |             |          |             |
-|             |          |             |          |             |
-|   TESTER1   +----------+     DUT     +----------+   TESTER2   |
-|             |          |             |          |             |
-|             |          |             |          |             |
-+-------------+          +-------------+          +-------------+
++-------------+    10G    +-------------+    10G    +-------------+
+|             +-----------+             +-----------+             |
+|             +-----------+             +-----------+             |
+|   TESTER1   +-----------+     DUT     +-----------+   TESTER2   |
+|             +-----------+             +-----------+             |
+|             +-----------+             +-----------+             |
++-------------+           +-------------+           +-------------+
             ]]></artwork>
              <postamble>Physical Test Topology</postamble>
       </figure></t>
-      
-      <t>
-      	Testing should be with a full Internet routing table as
-      	opposed to a generated set of prefixes that provides the correct
-      	number of routes.  Using this real Internet table ensures that a
-      	valid real-world benchmark of the Route-Reflector is produced and
-      	helps to ensure BGP implementations do not skew the result.
-      </t>
-      
-      
-      
-      
       </section>
+      
+      <section title="Issues to consider when testing">
+      <t>
+      	BGP is a protocol based on TCP.  As such it uses the inherent features available in TCP to ensure transmission of information such as TCP window sizing.  The understanding of this is important when creating a testing setup and methodology which accurately tests the DUT as opposed to being hampered by any limitations in testing equipment or other underlying protocols.
+
+In order to ensure that TCP windowing does not adversely effect the distribution of BGP routing update information during the test it is necessary to ensure that adequate physical bandwidth is available between the tester devices and the DUT.  This should be achieved through the provision of 5 x 10 GigabitEthernet interfaces between Tester 1 and the DUT and 5 x 10 Gigabit Ethernet interfaces between Tester 2 and the DUT.  This will remove the chance for there to be a bandwidth bottleneck when advertising multiple BGP updates simultaneously.
+
+The IP MTU value on all interfaces between the DUT and the testers should be set to 9000 bytes to ensure consistency in results.
+
+Another important consideration is the behaviour of any testing devices being utilised to obtain the benchmarking figures.  In order to provide clear and unambiguous guideance this document will detail the requirements on the testing devices as well.
+
+</t>
+<t>Test devices should be able to support the following features:
+
+<list style="symbols">
+          <t>The ability to bring multiple BGP peering sessions into an ESTABLISHED state without advertising any prefix/path information</t>
+
+          <t>The ability to advertise all BGP prefix/path information immediately and simultaneously without grouping advertisements into smaller sections of ramping up the advertisements over time.</t>
+          <t>The ability to count the number of prefixes advertised.</t>
+          <t>The ability to count the number of prefixes received.  Best-path processing or FIB installation are not required on the tester devices.</t>
+          <t>The ability to start the test when the prefixes are advertised and to end the test when all prefixes are received, providing a time between these two points.</t>
+        </list> 
+</t>
+
+      </section>
+      <section title="Route Profiles">
+      <t>
+The profile of the routing information that is used may result in wildly different results depending on the Route-Reflectors internal implementations of the BGP protocol.  In order to provide meaningful results that can be used for accurate benchmarking of Route-Reflector implementations against one and other and to provide results capable of relating to real world deployments of the DUT there are a number of specific route profiles that should be tested.
+
+Broadly these profiles fall into two categories.  
+
+<list style="hanging">
+<t hangText="Synthetic Prefixes"><vspace blankLines="0" />Those generated according to an algorithm within the tester in a linear fashion where this is a bounded set of 100,000 prefixes.  The prefixes should be in the following distribution; for IPv4, 1,000 x /8, 10,000 x /16, 39,000 x /19, 50,000 x /24 .  For IPv6, DISTRIBUTION HERE.  Each prefix should contain 2 ASNs in the AS_PATH.  50% of the prefixes should rely on the same next-hop IP address and the remaining 50% should have a unique next-hop IP address.  Each prefix should contain two BGP community values.</t>
+
+<t hangText="Global Internet Table"><vspace blankLines="0" />A 'recording' of the current Global Internet Routing table should be played back as the source feed providing a realistic prefix distribution, AS_PATH distribution, a realistic next-hop distribution and a realistic number of communities per prefix.  It is expected that this sample-set will change with each test as the Global Internet Table will change, however, the same sample-set must be used for every route-reflector taking part in a comparative benchmarking activity.</t>
+</list>
+
+
+The profiles that should be tested are
+
+<list style="symbols">
+<t>IPv4 <list style="symbols">
+	<t>Synthetic</t>
+	<t>Global Internet Table</t>
+	</list></t>
+<t>IPv6 <list style="symbols">
+	<t>Synthetic</t>
+	<t>Global Internet Table</t>
+	</list></t>
+<t>VPNv4 <list style="symbols">
+	<t>Synthetic with RD per ASN (With and without RT constraint?)</t>
+	<t>Synthetic with RD per Router-ID (With and without RT constraint?)</t>
+	</list></t>
+<t>VPNv6 <list style="symbols">
+	<t>Synthetic with RD per ASN (With and without RT constraint?)</t>
+	<t>Synthetic with RD per Router-ID (With and without RT constraint?)</t>
+	</list></t>
+</list>
+
+      </t>
+      </section>
+      
+      
       <section title="Test Scenarios" anchor="test_scenarios">
       	<t>Need to define table sizes and distributions between address-families
       		<list style="letters">
@@ -233,7 +299,6 @@
             		</list>
       
 		</t>
-      </section>
     </section>
 
     <section anchor="simple_list" title="Simple List">
