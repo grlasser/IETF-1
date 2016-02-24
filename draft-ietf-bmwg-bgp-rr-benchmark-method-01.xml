@@ -60,17 +60,34 @@
       <organization>Nokia</organization>
       <address>
         <postal>
-          <street>Coldra Woods, Chepstow Road</street>
+          <street>740 Waterside Drive, Aztec West</street>
           <!-- Reorder these if your country does things differently -->
-          <city>Newport</city>
+          <city>Bristol</city>
           <region></region>
-          <code></code>
+          <code>BS32 4UF</code>
           <country>UK</country>
         </postal>
         <email>james.cumming@nokia.com</email>
         <!-- uri and facsimile elements may also be added -->
       </address>
     </author>
+    
+    <author fullname="Gregory Lasserre" initials="G." 
+            surname="Lasserre">
+      <organization>Nokia</organization>
+      <address>
+        <postal>
+          <street>777 E Middlefield Road</street>
+          <!-- Reorder these if your country does things differently -->
+          <city>Mountain View</city>
+          <region>California</region>
+          <code></code>
+          <country>USA</country>
+        </postal>
+        <!-- uri and facsimile elements may also be added -->
+      </address>
+    </author>
+
     
     <author fullname="Gunter Van De Velde" initials="G." 
             surname="Van De Velde">
@@ -116,16 +133,7 @@
          keywords will be used for the search engine. -->
 
     <abstract>
-      <t>BGP is commonly used by Network Operators in order to make the distribution
-      of routing informaion within a network more scalable. With the advent of 
-      Virtualisation, new implementations are emerging to perform the route-reflector 
-      function within a BGP network.
-      This document provides a
-      methodology for benchmarking Route-Reflectors (both Virtualised and Traditional)
-      in order to allow a meaningful
-      comparison between them.
-      The terminology used in this document is described in 
-      draft-ietf-bmwg-bgp-rr-benchmark-terms-01.</t>
+      <t>BGP is commonly used with network operators in order to distribute routing information for both infrastructure routes as well as service routing information.  BGP is used due to its ability to handle high amounts of prefix and path information coupled with additional administrative information, such as communities, in a very scalable and stable manner.  Due to the way iBGP operates it is either necessary to deploy routers in a full iBGP mesh configuration or to introduce a administrative point(s) to distribute the routing information around the network.  These administrative reference points are call Route-Reflectors.  Route-Reflectors have be used for many years, however, with the advent of new technologies such as virtualisation there is a need to be able to benchmark this function is a consistent manner.  This document covers how to provide an accurate BGP route-reflector benchmark.</t>
     </abstract>
   </front>
 
@@ -139,7 +147,7 @@
   		Device Under Test (DUT) is a 'black box' and unknown to the tester.  Each 
   		scenario will be considered to be complete when the Route-Reflector has achieved 
   		convergence, which means it received, processed and completed sending all prefixes
-  		to its neighbours.</t>
+  		to its neighbours.  This benchmark will not include the installation of selected prefixes into the FIB table.</t>
   		<t>The following BGP address-families are in-scope for this
   		document: 
   		<list style="symbols">
@@ -182,6 +190,12 @@
             ]]></artwork>
              <postamble>Physical Test Topology</postamble>
       </figure></t>
+      
+      <section title="Issues to consider when testing">
+      <t>
+      	BGP is a protocol based on TCP.  As such it uses the inherent features available in TCP to ensure transmission of information such as TCP window sizing.
+      </t>
+      
       
       <t>
       	Testing should be with a full Internet routing table as
