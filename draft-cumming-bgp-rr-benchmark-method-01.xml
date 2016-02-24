@@ -84,27 +84,26 @@
           <code></code>
           <country>USA</country>
         </postal>
+        <email>gregory.lasserre@nokia.com</email>
         <!-- uri and facsimile elements may also be added -->
       </address>
     </author>
 
-    
+  <!--  
     <author fullname="Gunter Van De Velde" initials="G." 
             surname="Van De Velde">
       <organization>Nokia</organization>
       <address>
         <postal>
           <street>50 Kieviplein</street>
-          <!-- Reorder these if your country does things differently -->
           <city>Antwerpen</city>
           <region></region>
           <code></code>
           <country>Belgium</country>
         </postal>
-        <!-- uri and facsimile elements may also be added -->
       </address>
     </author>
-
+-->
     <date month="February" year="2016" />
 
     <!-- If the month and year are both specified and are the current ones, xml2rfc will fill 
@@ -134,7 +133,8 @@
 
     <abstract>
    
-      <t>BGP is commonly used with network operators in order to distribute routing information for both infrastructure routes as well as service routing information.  BGP is used due to its ability to handle high amounts of prefix and path information coupled with additional administrative information, such as communities, in a very scalable and stable manner.  Due to the way iBGP operates it is either necessary to deploy routers in a full iBGP mesh configuration or to introduce a administrative point(s) to distribute the routing information around the network.  These administrative reference points are call Route-Reflectors.  Route-Reflectors have be used for many years, however, with the advent of new technologies such as virtualisation there is a need to be able to benchmark this function is a consistent manner.  This document covers how to provide an accurate BGP route-reflector benchmark.</t>
+      <t>BGP is commonly used with network operators in order to distribute routing information for both infrastructure routes as well as service routing information.  BGP is used due to its ability to handle high amounts of prefix and path information coupled with additional administrative information, such as communities, in a very scalable and stable manner.</t>
+      <t>Due to the way iBGP operates it is either necessary to deploy routers in a full iBGP mesh configuration or to introduce a administrative point(s) to distribute the routing information around the network.  These administrative reference points are call Route-Reflectors.  Route-Reflectors have be used for many years, however, with the advent of new technologies such as virtualisation there is a need to be able to benchmark this function is a consistent manner.  This document covers how to provide an accurate BGP route-reflector benchmark for both physical and virtual implementations of the funtion.</t>
     </abstract>
     
   </front>
@@ -161,6 +161,7 @@
   		Other address-families are excluded to ensure a level of consistency between
   		Route-Reflector implementations.
   	</t>
+  	<t>Other BGP features such as RT-Constraint and Add-Path are out of scope of this document and should be disabled in any tests</t>
   	</section>
 
       <section title="Requirements Language">
@@ -191,12 +192,12 @@
         <figure align="center" anchor="physical_topology">
         <preamble></preamble>
         <artwork align="center"><![CDATA[
-+-------------+    10G    +-------------+    10G    +-------------+
-|             +-----------+             +-----------+             |
-|             +-----------+             +-----------+             |
++-------------+           +-------------+           +-------------+
+|             +           +             +           +             |
+|             +    10G    +             +    10G    +             |
 |   TESTER1   +-----------+     DUT     +-----------+   TESTER2   |
-|             +-----------+             +-----------+             |
-|             +-----------+             +-----------+             |
+|             +           +             +           +             |
+|             +           +             +           +             |
 +-------------+           +-------------+           +-------------+
             ]]></artwork>
              <postamble>Physical Test Topology</postamble>
@@ -206,14 +207,15 @@
       <section title="Issues to consider when testing">
       <t>
       	BGP is a protocol based on TCP.  As such it uses the inherent features available in TCP to ensure transmission of information such as TCP window sizing.  The understanding of this is important when creating a testing setup and methodology which accurately tests the DUT as opposed to being hampered by any limitations in testing equipment or other underlying protocols.
-
-In order to ensure that TCP windowing does not adversely effect the distribution of BGP routing update information during the test it is necessary to ensure that adequate physical bandwidth is available between the tester devices and the DUT.  This should be achieved through the provision of 5 x 10 GigabitEthernet interfaces between Tester 1 and the DUT and 5 x 10 Gigabit Ethernet interfaces between Tester 2 and the DUT.  This will remove the chance for there to be a bandwidth bottleneck when advertising multiple BGP updates simultaneously.
-
-The IP MTU value on all interfaces between the DUT and the testers should be set to 9000 bytes to ensure consistency in results.
-
-Another important consideration is the behaviour of any testing devices being utilised to obtain the benchmarking figures.  In order to provide clear and unambiguous guideance this document will detail the requirements on the testing devices as well.
-
 </t>
+<t>In order to ensure that TCP windowing does not adversely effect the distribution of BGP routing update information during the test it is necessary to ensure that adequate physical bandwidth is available between the tester devices and the DUT.  This should be achieved through the provision of 1 x 10 GigabitEthernet interfaces between Tester 1 and the DUT and 1 x 10 Gigabit Ethernet interfaces between Tester 2 and the DUT.  This will remove the chance for there to be a bandwidth bottleneck when advertising multiple BGP updates simultaneously.</t>
+
+<t>The IP MTU value on all interfaces between the DUT and the testers should be set to 9000 bytes to ensure consistency in results.</t>
+
+<t>Another important consideration is the behaviour of any testing devices being utilised to obtain the benchmarking figures.  In order to provide clear and unambiguous guideance this document will detail the requirements on the testing devices as well.</t>
+
+<t>Tester 1 and Tester 2 may be different physical units however they must be able to communicate with one and other in order to provide the resulting measurement.  In the case where Tester 1 and Tester 2 and the same physical device there must be the ability to ring-fence the required memory, CPU and I/O resources to logically serarate Tester 1 from Tester 2.</t>
+
 <t>Test devices should be able to support the following features:
 
 <list style="symbols">
@@ -280,46 +282,9 @@ The profiles should be tested individually and then in groups where the grouping
       <t>Where they are processing multiple sets of updates from a number of iBGP neighbours and reflecting them to multiple iBGP clients</t>
       </list>
       </t>
+      </section>
       
-      
-      	<t>Need to define table sizes and distributions between address-families
-      		<list style="letters">
-      			<t>test1 - reflect from eBGP start        <figure align="center" anchor="scenario1_topology">
-        <preamble></preamble>
-        <artwork align="center"><![CDATA[
-+-------------+          +-------------+          +-------------+
-|             |          |             |          |             |
-|             |    X1    |             |    X1    |             |
-|   TESTER1   +----------+     DUT     +----------+   TESTER2   |
-|    AS  X    |          |    AS  Y    |          |    AS  Y    |
-|             |          |             |          |             |
-+-------------+          +-------------+          +-------------+
-            ]]></artwork>
-             <postamble>Scenario 1 Topology</postamble>
-      </figure>
-      Establish iBGP peering session between DUT and TESTER2.  Enable the eBGP
-      peering session between TESTER1 and DUT on TESTER1</t>
-      			<t>test2 - reflect from start 100 iBGP peers
-
-      
-        <figure align="center" anchor="scenario2_topology">
-        <preamble></preamble>
-        <artwork align="center"><![CDATA[
-+-------------+          +-------------+   X100   +-------------+
-|             |          |             +----------+             |
-|             |    X1    |             +----------+             |
-|   TESTER1   +----------+     DUT     +----------+   TESTER2   |
-|    AS  X    |          |    AS  Y    +----------+    AS  Y    |
-|             |          |             +----------+             |
-+-------------+          +-------------+          +-------------+
-            ]]></artwork>
-             <postamble>Scenario 2 Topology</postamble>
-      </figure>
-      	</t>
-            		</list>
-      
-		</t>
-    </section>
+ 
     
     <section title="Results Matrix">
     <texttable anchor="results_matrix" title="Results Matrix">
@@ -572,7 +537,9 @@ main(int argc, char *argv[])
       target="DOMINATION"></xref>.</t>
     </section>
 
-    <!-- Possibly a 'Contributors' section ... -->
+    <section anchor="Contributors" title="Contributors">
+    <t>The authors would like to thank G. Van de Velde, Nokia for his reviews and contributions</t>
+    </section>
 
     <section anchor="IANA" title="IANA Considerations">
       <t>This memo includes no request to IANA.</t>
