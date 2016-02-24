@@ -174,7 +174,11 @@
         
       </section>
       <section title="Terminology">
-      <t>Blah blah blah</t>
+      <t><list style="hanging" hangIndent="16">
+      <t hangText="Standing Start">Where the DUT has completed its boot procedure and is stable and all BGP sessions are in the ESTABLISHED state but no prefixes are being advertised from the tester</t>
+      <t hangText="Cold Start">Where the DUT has completed its boot procedure and is stable and all BGP sessions are in the IDLE state due to them being shutdown on the tester device</t>
+      </list>
+      </t>
       </section>
       
       <section title="Physical Test Layout">
@@ -262,6 +266,17 @@ The profiles that should be tested are
       
       
       <section title="Test Scenarios" anchor="test_scenarios">
+      <t>Route-Reflectors typically operate in two situations:
+      <list style="numbers">
+      <t>Where they are processing a set of updates from a single iBGP neighbour and reflecting it to multiple iBGP clients</t>
+      <t>Where they are processing multiple sets of updates from a number of iBGP neighbours and reflecting them to multiple iBGP clients</t>
+      </list>
+      </t>
+      
+      
+      
+      
+      
       	<t>Need to define table sizes and distributions between address-families
       		<list style="letters">
       			<t>test1 - reflect from eBGP start        <figure align="center" anchor="scenario1_topology">
