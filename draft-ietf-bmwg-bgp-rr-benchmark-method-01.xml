@@ -227,6 +227,17 @@ Another important consideration is the behaviour of any testing devices being ut
       <t>
 The profile of the routing information that is used may result in wildly different results depending on the Route-Reflectors internal implementations of the BGP protocol.  In order to provide meaningful results that can be used for accurate benchmarking of Route-Reflector implementations against one and other and to provide results capable of relating to real world deployments of the DUT there are a number of specific route profiles that should be tested.
 
+Broadly these profiles fall into two categories.  
+
+<list style="hanging">
+<t hangText="Synthetic Prefixes"><vspace blankLines="0" />Those generated according to an algorithm within the tester in a linear fashion where this is a bounded set of 100,000 prefixes.  The prefixes should be in the following distribution; for IPv4, 1,000 x /8, 10,000 x /16, 39,000 x /19, 50,000 x /24 .  For IPv6, DISTRIBUTION HERE.  Each prefix should contain 2 ASNs in the AS_PATH.  50% of the prefixes should rely on the same next-hop IP address and the remaining 50% should have a unique next-hop IP address.  Each prefix should contain two BGP community values.</t>
+
+<t hangText="Global Internet Table"><vspace blankLines="0" />A 'recording' of the current Global Internet Routing table should be played back as the source feed providing a realistic prefix distribution, AS_PATH distribution, a realistic next-hop distribution and a realistic number of communities per prefix.  It is expected that this sample-set will change with each test as the Global Internet Table will change, however, the same sample-set must be used for every route-reflector taking part in a comparative benchmarking activity.</t>
+</list>
+
+
+The profiles that should be tested are
+
 <list style="symbols">
 <t>IPv4 <list style="symbols">
 	<t>Synthetic</t>
