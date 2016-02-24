@@ -282,12 +282,6 @@ The profiles should be tested individually and then in groups where the grouping
       </t>
       
       
-      
-      
-      
-      
-      
-      
       	<t>Need to define table sizes and distributions between address-families
       		<list style="letters">
       			<t>test1 - reflect from eBGP start        <figure align="center" anchor="scenario1_topology">
