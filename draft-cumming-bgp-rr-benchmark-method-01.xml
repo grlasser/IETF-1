@@ -89,6 +89,24 @@
       </address>
     </author>
 
+    <author fullname="Carsten Rossenhoevel" initials="C." 
+            surname="Rossenhoevel">
+      <organization>EANTC</organization>
+      <address>
+        <postal>
+          <street></street>
+          <!-- Reorder these if your country does things differently -->
+          <city></city>
+          <region></region>
+          <code></code>
+          <country>Germany</country>
+        </postal>
+        <email>cross@eantc.de</email>
+        <!-- uri and facsimile elements may also be added -->
+      </address>
+    </author>
+
+
   <!--  
     <author fullname="Gunter Van De Velde" initials="G." 
             surname="Van De Velde">
@@ -132,24 +150,27 @@
          keywords will be used for the search engine. -->
 
     <abstract>
-   
-      <t>BGP is commonly used with network operators in order to distribute routing information for both infrastructure routes as well as service routing information.  BGP is used due to its ability to handle high amounts of prefix and path information coupled with additional administrative information, such as communities, in a very scalable and stable manner.</t>
-      <t>Due to the way iBGP operates it is either necessary to deploy routers in a full iBGP mesh configuration or to introduce a administrative point(s) to distribute the routing information around the network.  These administrative reference points are call Route-Reflectors.  Route-Reflectors have be used for many years, however, with the advent of new technologies such as virtualisation there is a need to be able to benchmark this function is a consistent manner.  This document covers how to provide an accurate BGP route-reflector benchmark for both physical and virtual implementations of the funtion.</t>
+    <t>This document sets out a methodology to produce a consistent and reliable benchmark of the convergence performance between route-reflector implementations, whether deployed using virtualisation or traditional hardware router platforms.</t>
+    <t>The intention is that the tests in this methodology will be able to be executed, in an unattended fashion, against a black-box router-reflector and provide results that identify the performance of the convergence of the route-reflector which will enable the operator to obtain a meaningful representation of the specific route-reflectors convergence against others tested.</t>
     </abstract>
+
     
   </front>
 
   <middle>
   
   	<section title="Introduction">
-  		<t>This document defines the methodology for benchmarking BGP Route-Reflectors
-  		against specific key performance indicators (KPI) in order to allow a valid,
+  	      <t>BGP is commonly used with network operators in order to distribute routing information for both infrastructure routes as well as service routing information.  BGP is used due to its ability to handle high numbers of prefixes with extensive reachability and administrative information in a very scalable and stable manner.</t>
+      <t>Due to the way iBGP operates it is either necessary to deploy routers in a full iBGP mesh configuration or to introduce a administrative point(s) to distribute the routing information around the network.  These administrative reference points are called Route-Reflectors.  Route-Reflectors have be used for many years, however, with the advent of new technologies such as virtualisation there is a need to be able to benchmark this function is a consistent manner to provide comparisons between implementations.  This document covers how to provide an accurate BGP route-reflector benchmark for both physical and virtual implementations of the funtion.</t>
+ 
+  		<t>This document defines the methodology for benchmarking the convergence performance of BGP Route-Reflectors
+  		in order to allow a valid,
   		fair, comparative analysis of Route-Reflector implementations in a representative
   		sample of common deployment scenarios.  The methodology will assume that the
   		Device Under Test (DUT) is a 'black box' and unknown to the tester.  Each 
   		scenario will be considered to be complete when the Route-Reflector has achieved 
   		convergence, which means it received, processed and completed sending all prefixes
-  		to its neighbours.  This benchmark will not include the installation of selected prefixes into the FIB table.</t>
+  		to its peers.  This benchmark will not include the installation of selected prefixes into the FIB table.</t>
   		<t>The following BGP address-families are in-scope for this
   		document: 
   		<list style="symbols">
@@ -162,6 +183,7 @@
   		Route-Reflector implementations.
   	</t>
   	<t>Other BGP features such as RT-Constraint and Add-Path are out of scope of this document and should be disabled in any tests</t>
+  	
   	</section>
 
       <section title="Requirements Language">
@@ -182,7 +204,7 @@
       </t>
       </section>
       
-      <section title="Physical Test Layout">
+      <section title="Physical Test Setup">
        <t>The following diagram details the physical topology for the 
         testing.  The tester devices must be equipped with sufficient resources
         in order to ensure they do not create a bottleneck on any of the tests
@@ -211,6 +233,8 @@
 <t>In order to ensure that TCP windowing does not adversely effect the distribution of BGP routing update information during the test it is necessary to ensure that adequate physical bandwidth is available between the tester devices and the DUT.  This should be achieved through the provision of 1 x 10 GigabitEthernet interfaces between Tester 1 and the DUT and 1 x 10 Gigabit Ethernet interfaces between Tester 2 and the DUT.  This will remove the chance for there to be a bandwidth bottleneck when advertising multiple BGP updates simultaneously.</t>
 
 <t>The IP MTU value on all interfaces between the DUT and the testers should be set to 9000 bytes to ensure consistency in results.</t>
+
+<t>The TCP MSS should be set to the maximum available and recorded. The TCP MSS should match on all devices tested, as such the lowest common denominator TCP MSS between all implementations of route-reflectors being tested should be used.</t>
 
 <t>Another important consideration is the behaviour of any testing devices being utilised to obtain the benchmarking figures.  In order to provide clear and unambiguous guideance this document will detail the requirements on the testing devices as well.</t>
 
@@ -268,6 +292,8 @@ The profiles should be tested individually and then in groups where the grouping
 <list style="symbols">
 <t>IPv4+IPv6</t>
 <t>VPNv4+VPNv6</t>
+<t>IPv4+VPNv4</t>
+<t>IPv6+VPNv6</t>
 <t>IPv4+IPv6+VPNv4+VPNv6</t>
 </list>
 
@@ -333,6 +359,24 @@ The profiles should be tested individually and then in groups where the grouping
 <c>VPNv4 + VPNv6</c><c>Synth</c><c>R-ID</c><c>SS</c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c>
 <c>VPNv4 + VPNv6</c><c>Synth</c><c>R-ID</c><c>CS</c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c>
 
+<c>IPv4 + VPNv4</c> <c>IPv4 Synth + VPNv4 Synth</c> <c>ASN</c> <c>SS</c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c>
+<c>IPv4 + VPNv4</c><c>IPv4 Synth + VPNv4 Synth</c><c>ASN</c><c>CS</c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c>
+<c>IPv4 + VPNv4</c><c>IPv4 Synth + VPNv4 Synth</c><c>R-ID</c><c>SS</c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c>
+<c>IPv4 + VPNv4</c><c>IPv4 Synth + VPNv4 Synth</c><c>R-ID</c><c>CS</c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c>
+<c>IPv4 + VPNv4</c> <c>IPv4 GIT + VPNv4 Synth</c> <c>ASN</c> <c>SS</c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c>
+<c>IPv4 + VPNv4</c><c>IPv4 GIT + VPNv4 Synth</c><c>ASN</c><c>CS</c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c>
+<c>IPv4 + VPNv4</c><c>IPv4 GIT + VPNv4 Synth</c><c>R-ID</c><c>SS</c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c>
+<c>IPv4 + VPNv4</c><c>IPv4 GIT + VPNv4 Synth</c><c>R-ID</c><c>CS</c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c>
+
+<c>IPv6 + VPNv6</c> <c>IPv6 Synth + VPNv6 Synth</c> <c>ASN</c> <c>SS</c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c>
+<c>IPv6 + VPNv6</c><c>IPv6 Synth + VPNv6 Synth</c><c>ASN</c><c>CS</c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c>
+<c>IPv6 + VPNv6</c><c>IPv6 Synth + VPNv6 Synth</c><c>R-ID</c><c>SS</c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c>
+<c>IPv6 + VPNv6</c><c>IPv6 Synth + VPNv6 Synth</c><c>R-ID</c><c>CS</c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c>
+<c>IPv6 + VPNv6</c> <c>IPv6 GIT + VPNv6 Synth</c> <c>ASN</c> <c>SS</c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c>
+<c>IPv6 + VPNv6</c><c>IPv6 GIT + VPNv6 Synth</c><c>ASN</c><c>CS</c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c>
+<c>IPv6 + VPNv6</c><c>IPv6 GIT + VPNv6 Synth</c><c>R-ID</c><c>SS</c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c>
+<c>IPv6 + VPNv6</c><c>IPv6 GIT + VPNv6 Synth</c><c>R-ID</c><c>CS</c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c>
+
 <c>IPv4 + IPv6 + VPNv4 + VPNv6</c><c>IPv4/6 Synth + VPNv4/6 Synth</c><c>ASN</c><c>SS</c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c>
 <c>IPv4 + IPv6 + VPNv4 + VPNv6</c><c>IPv4/6 Synth + VPNv4/6 Synth</c><c>ASN</c><c>CS</c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c>
 <c>IPv4 + IPv6 + VPNv4 + VPNv6</c><c>IPv4/6 Synth + VPNv4/6 Synth</c><c>R-ID</c><c>SS</c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c>
@@ -346,196 +390,16 @@ The profiles should be tested individually and then in groups where the grouping
         </texttable>
     </section>
 
-    <section anchor="simple_list" title="Simple List">
-      <t>List styles: 'empty', 'symbols', 'letters', 'numbers', 'hanging',
-      'format'.</t>
+   
 
-      <t><list style="symbols">
-          <t>First bullet</t>
+   
 
-          <t>Second bullet</t>
-        </list> You can write text here as well.</t>
-    </section>
-
-    <section title="Figures">
-      <t>Figures should not exceed 69 characters wide to allow for the indent
-      of sections.</t>
-
-      <figure align="center" anchor="xml_happy">
-        <preamble>Preamble text - can be omitted or empty.</preamble>
-
-        <artwork align="center"><![CDATA[
-+-----------------------+
-| Use XML, be Happy :-) |
-|_______________________|
-            ]]></artwork>
-
-        <postamble>Cross-references allowed in pre- and postamble. <xref
-        target="min_ref" />.</postamble>
-      </figure>
-
-      <t>The CDATA means you don't need to escape meta-characters (especially
-      &lt;&nbsp;(&amp;lt;) and &amp;&nbsp;(&amp;amp;)) but is not essential.
-      Figures may also have a title attribute but it won't be displayed unless
-      there is also an anchor. White space, both horizontal and vertical, is
-      significant in figures even if you don't use CDATA.</t>
-    </section>
-
-    <!-- This PI places the pagebreak correctly (before the section title) in the text output. -->
 
     <?rfc needLines="8" ?>
 
-    <section title="Subsections and Tables">
-      <section title="A Subsection">
-        <t>By default 3 levels of nesting show in table of contents but that
-        can be adjusted with the value of the "tocdepth" processing
-        instruction.</t>
-      </section>
+ 
 
-      <section title="Tables">
-        <t>.. are very similar to figures:</t>
 
-        <texttable anchor="table_example" title="A Very Simple Table">
-          <preamble>Tables use ttcol to define column headers and widths.
-          Every cell then has a "c" element for its content.</preamble>
-
-          <ttcol align="center">ttcol #1</ttcol>
-
-          <ttcol align="center">ttcol #2</ttcol>
-
-          <c>c #1</c>
-
-          <c>c #2</c>
-
-          <c>c #3</c>
-
-          <c>c #4</c>
-
-          <c>c #5</c>
-
-          <c>c #6</c>
-
-          <postamble>which is a very simple example.</postamble>
-        </texttable>
-      </section>
-    </section>
-
-    <section anchor="nested_lists" title="More about Lists">
-      <t>Lists with 'hanging labels': the list item is indented the amount of
-      the hangIndent: <list hangIndent="8" style="hanging">
-          <t hangText="short">With a label shorter than the hangIndent.</t>
-
-          <t hangText="fantastically long label">With a label longer than the
-          hangIndent.</t>
-
-          <t hangText="vspace_trick"><vspace blankLines="0" />Forces the new
-          item to start on a new line.</t>
-        </list></t>
-
-      <!-- It would be nice to see the next piece (12 lines) all on one page. -->
-
-      <?rfc needLines="12" ?>
-
-      <t>Simulating more than one paragraph in a list item using
-      &lt;vspace&gt;: <list style="letters">
-          <t>First, a short item.</t>
-
-          <t>Second, a longer list item.<vspace blankLines="1" /> And
-          something that looks like a separate pararaph..</t>
-        </list></t>
-
-      <t>Simple indented paragraph using the "empty" style: <list
-          hangIndent="10" style="empty">
-          <t>The quick, brown fox jumped over the lazy dog and lived to fool
-          many another hunter in the great wood in the west.</t>
-        </list></t>
-
-      <section title="Numbering Lists across Lists and Sections">
-        <t>Numbering items continuously although they are in separate
-        &lt;list&gt; elements, maybe in separate sections using the "format"
-        style and a "counter" variable.</t>
-
-        <t>First list: <list counter="reqs" hangIndent="4" style="format R%d">
-            <t>#1</t>
-
-            <t>#2</t>
-
-            <t>#3</t>
-          </list> Specify the indent explicitly so that all the items line up
-        nicely.</t>
-
-        <t>Second list: <list counter="reqs" hangIndent="4" style="format R%d">
-            <t>#4</t>
-
-            <t>#5</t>
-
-            <t>#6</t>
-          </list></t>
-      </section>
-
-      <section title="Where the List Numbering Continues">
-        <t>List continues here.</t>
-
-        <t>Third list: <list counter="reqs" hangIndent="4" style="format R%d">
-            <t>#7</t>
-
-            <t>#8</t>
-
-            <t>#9</t>
-
-            <t>#10</t>
-          </list> The end of the list.</t>
-      </section>
-    </section>
-
-    <section anchor="codeExample"
-             title="Example of Code or MIB Module To Be Extracted">
-      <figure>
-        <preamble>The &lt;artwork&gt; element has a number of extra attributes
-        that can be used to substitute a more aesthetically pleasing rendition
-        into HTML output while continuing to use the ASCII art version in the
-        text and nroff outputs (see the xml2rfc README for details). It also
-        has a "type" attribute. This is currently ignored except in the case
-        'type="abnf"'. In this case the "artwork" is expected to contain a
-        piece of valid Augmented Backus-Naur Format (ABNF) grammar. This will
-        be syntax checked by xml2rfc and any errors will cause a fatal error
-        if the "strict" processing instruction is set to "yes". The ABNF will
-        also be colorized in HTML output to highlight the syntactic
-        components. Checking of additional "types" may be provided in future
-        versions of xml2rfc.</preamble>
-
-        <artwork><![CDATA[
-
-/**** an example C program */
-
-#include <stdio.h>
-
-void
-main(int argc, char *argv[])
-{
-    int i;
-
-    printf("program arguments are:\n");
-    for (i = 0; i < argc; i++) {
-        printf("%d: \"%s\"\n", i, argv[i]);
-    }
-
-    exit(0);
-} /* main */
-
-/* end of file */
-
-            ]]></artwork>
-      </figure>
-    </section>
-
-    <section anchor="Acknowledgements" title="Acknowledgements">
-      <t>This template was derived from an initial version written by Pekka
-      Savola and contributed by him to the xml2rfc project.</t>
-
-      <t>This document is part of a plan to make xml2rfc indispensable <xref
-      target="DOMINATION"></xref>.</t>
-    </section>
 
     <section anchor="Contributors" title="Contributors">
     <t>The authors would like to thank G. Van de Velde, Nokia for his reviews and contributions</t>
