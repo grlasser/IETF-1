@@ -37,7 +37,7 @@
 <?rfc subcompact="no" ?>
 <!-- keep one blank line between list items -->
 <!-- end of list of popular I-D processing instructions -->
-<rfc category="info" docName="draft-cumming-bgp-rr-benchmark-method-01" ipr="trust200902">
+<rfc category="info" docName="draft-lasserre-bgp-rr-benchmark-method-01" ipr="trust200902">
   <!-- category values: std, bcp, info, exp, and historic
      ipr values: full3667, noModification3667, noDerivatives3667
      you can add the attributes updates="NNNN" and obsoletes="NNNN" 
@@ -55,6 +55,24 @@
 
     <!-- Another author who claims to be an editor -->
 
+
+    <author fullname="Gregory Lasserre" initials="G." 
+            surname="Lasserre">
+      <organization>Nokia</organization>
+      <address>
+        <postal>
+          <street>777 E Middlefield Road</street>
+          <!-- Reorder these if your country does things differently -->
+          <city>Mountain View</city>
+          <region>California</region>
+          <code></code>
+          <country>USA</country>
+        </postal>
+        <email>gregory.lasserre@nokia.com</email>
+        <!-- uri and facsimile elements may also be added -->
+      </address>
+    </author>
+    
     <author fullname="James Cumming" initials="J.G." 
             surname="Cumming">
       <organization>Nokia</organization>
@@ -72,22 +90,6 @@
       </address>
     </author>
     
-    <author fullname="Gregory Lasserre" initials="G." 
-            surname="Lasserre">
-      <organization>Nokia</organization>
-      <address>
-        <postal>
-          <street>777 E Middlefield Road</street>
-          <!-- Reorder these if your country does things differently -->
-          <city>Mountain View</city>
-          <region>California</region>
-          <code></code>
-          <country>USA</country>
-        </postal>
-        <email>gregory.lasserre@nokia.com</email>
-        <!-- uri and facsimile elements may also be added -->
-      </address>
-    </author>
 
     <author fullname="Carsten Rossenhoevel" initials="C." 
             surname="Rossenhoevel">
@@ -106,23 +108,25 @@
       </address>
     </author>
 
-
-  <!--  
-    <author fullname="Gunter Van De Velde" initials="G." 
-            surname="Van De Velde">
-      <organization>Nokia</organization>
+  <author fullname="Guillaume Gaulon" initials="G." 
+            surname="Gaulon">
+      <organization>Orange</organization>
       <address>
         <postal>
-          <street>50 Kieviplein</street>
-          <city>Antwerpen</city>
+          <street>38-40 Rue du General Leclerc</street>
+          <!-- Reorder these if your country does things differently -->
+          <code>92130</code>
+          <city>Issy-les-Moulineaux</city>
           <region></region>
-          <code></code>
-          <country>Belgium</country>
+          
+          <country>France</country>
         </postal>
+        <email>guillaume.gaulon@orange.com</email>
+        <!-- uri and facsimile elements may also be added -->
       </address>
     </author>
--->
-    <date month="February" year="2016" />
+
+    <date month="March" year="2016" />
 
     <!-- If the month and year are both specified and are the current ones, xml2rfc will fill 
          in the current day for you. If only the current year is specified, xml2rfc will fill 
