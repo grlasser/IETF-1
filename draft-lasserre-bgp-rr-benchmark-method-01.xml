@@ -1,0 +1,502 @@
+<?xml version="1.0" encoding="US-ASCII"?>
+<!-- This template is for creating an Internet Draft using xml2rfc,
+     which is available here: http://xml.resource.org. -->
+<!DOCTYPE rfc SYSTEM "rfc2629.dtd" [
+<!-- One method to get references from the online citation libraries.
+     There has to be one entity for each item to be referenced. 
+     An alternate method (rfc include) is described in the references. -->
+
+<!ENTITY RFC2119 SYSTEM "http://xml.resource.org/public/rfc/bibxml/reference.RFC.2119.xml">
+<!ENTITY RFC2629 SYSTEM "http://xml.resource.org/public/rfc/bibxml/reference.RFC.2629.xml">
+<!ENTITY RFC3552 SYSTEM "http://xml.resource.org/public/rfc/bibxml/reference.RFC.3552.xml">
+<!ENTITY RFC4098 SYSTEM "http://xml.resource.org/public/rfc/bibxml/reference.RFC.4098.xml">
+<!ENTITY I-D.narten-iana-considerations-rfc2434bis SYSTEM "http://xml.resource.org/public/rfc/bibxml3/reference.I-D.narten-iana-considerations-rfc2434bis.xml">
+]>
+<?xml-stylesheet type='text/xsl' href='rfc2629.xslt' ?>
+<!-- used by XSLT processors -->
+<!-- For a complete list and description of processing instructions (PIs), 
+     please see http://xml.resource.org/authoring/README.html. -->
+<!-- Below are generally applicable Processing Instructions (PIs) that most I-Ds might want to use.
+     (Here they are set differently than their defaults in xml2rfc v1.32) -->
+<?rfc strict="yes" ?>
+<!-- give errors regarding ID-nits and DTD validation -->
+<!-- control the table of contents (ToC) -->
+<?rfc toc="yes"?>
+<!-- generate a ToC -->
+<?rfc tocdepth="4"?>
+<!-- the number of levels of subsections in ToC. default: 3 -->
+<!-- control references -->
+<?rfc symrefs="yes"?>
+<!-- use symbolic references tags, i.e, [RFC2119] instead of [1] -->
+<?rfc sortrefs="yes" ?>
+<!-- sort the reference entries alphabetically -->
+<!-- control vertical white space 
+     (using these PIs as follows is recommended by the RFC Editor) -->
+<?rfc compact="yes" ?>
+<!-- do not start each main section on a new page -->
+<?rfc subcompact="no" ?>
+<!-- keep one blank line between list items -->
+<!-- end of list of popular I-D processing instructions -->
+<rfc category="info" docName="draft-lasserre-bgp-rr-benchmark-method-01" ipr="trust200902">
+  <!-- category values: std, bcp, info, exp, and historic
+     ipr values: full3667, noModification3667, noDerivatives3667
+     you can add the attributes updates="NNNN" and obsoletes="NNNN" 
+     they will automatically be output with "(if approved)" -->
+
+  <!-- ***** FRONT MATTER ***** -->
+
+  <front>
+    <!-- The abbreviated title is used in the page header - it is only necessary if the 
+         full title is longer than 39 characters -->
+
+    <title abbrev="BGP RR Benchmarking Methodology">BGP Route-Reflector Benchmarking Methodology</title>
+
+    <!-- add 'role="editor"' below for the editors if appropriate -->
+
+    <!-- Another author who claims to be an editor -->
+
+
+    <author fullname="Gregory Lasserre" initials="G." 
+            surname="Lasserre">
+      <organization>Nokia</organization>
+      <address>
+        <postal>
+          <street>777 E Middlefield Road</street>
+          <!-- Reorder these if your country does things differently -->
+          <city>Mountain View</city>
+          <region>California</region>
+          <code></code>
+          <country>USA</country>
+        </postal>
+        <email>gregory.lasserre@nokia.com</email>
+        <!-- uri and facsimile elements may also be added -->
+      </address>
+    </author>
+    
+    <author fullname="James Cumming" initials="J.G." 
+            surname="Cumming">
+      <organization>Nokia</organization>
+      <address>
+        <postal>
+          <street>740 Waterside Drive, Aztec West</street>
+          <!-- Reorder these if your country does things differently -->
+          <city>Bristol</city>
+          <region></region>
+          <code>BS32 4UF</code>
+          <country>UK</country>
+        </postal>
+        <email>james.cumming@nokia.com</email>
+        <!-- uri and facsimile elements may also be added -->
+      </address>
+    </author>
+    
+
+    <author fullname="Carsten Rossenhoevel" initials="C." 
+            surname="Rossenhoevel">
+      <organization>EANTC</organization>
+      <address>
+        <postal>
+          <street></street>
+          <!-- Reorder these if your country does things differently -->
+          <city></city>
+          <region></region>
+          <code></code>
+          <country>Germany</country>
+        </postal>
+        <email>cross@eantc.de</email>
+        <!-- uri and facsimile elements may also be added -->
+      </address>
+    </author>
+
+  <author fullname="Guillaume Gaulon" initials="G." 
+            surname="Gaulon">
+      <organization>Orange</organization>
+      <address>
+        <postal>
+          <street>38-40 Rue du General Leclerc</street>
+          <!-- Reorder these if your country does things differently -->
+          <code>92130</code>
+          <city>Issy-les-Moulineaux</city>
+          <region></region>
+          
+          <country>France</country>
+        </postal>
+        <email>guillaume.gaulon@orange.com</email>
+        <!-- uri and facsimile elements may also be added -->
+      </address>
+    </author>
+
+    <date month="March" year="2016" />
+
+    <!-- If the month and year are both specified and are the current ones, xml2rfc will fill 
+         in the current day for you. If only the current year is specified, xml2rfc will fill 
+	 in the current day and month for you. If the year is not the current one, it is 
+	 necessary to specify at least a month (xml2rfc assumes day="1" if not specified for the 
+	 purpose of calculating the expiry date).  With drafts it is normally sufficient to 
+	 specify just the year. -->
+
+    <!-- Meta-data Declarations -->
+
+    <area>General</area>
+
+    <workgroup>Internet Engineering Task Force</workgroup>
+
+    <!-- WG name at the upperleft corner of the doc,
+         IETF is fine for individual submissions.  
+	 If this element is not present, the default is "Network Working Group",
+         which is used by the RFC Editor as a nod to the history of the IETF. -->
+
+    <keyword>template</keyword>
+
+    <!-- Keywords will be incorporated into HTML output
+         files in a meta tag but they have no effect on text or nroff
+         output. If you submit your draft to the RFC Editor, the
+         keywords will be used for the search engine. -->
+
+    <abstract>
+    <t>This document sets out a methodology to produce a consistent and reliable benchmark of the convergence performance between route-reflector implementations, whether deployed using virtualisation or traditional hardware router platforms.</t>
+    <t>The intention is that the tests in this methodology will be able to be executed, in an unattended fashion, against a black-box router-reflector and provide results that identify the performance of the convergence of the route-reflector which will enable the operator to obtain a meaningful representation of the specific route-reflectors convergence against others tested.</t>
+    </abstract>
+
+    
+  </front>
+
+  <middle>
+  
+  	<section title="Introduction">
+  	      <t>BGP is commonly used with network operators in order to distribute routing information for both infrastructure routes as well as service routing information.  BGP is used due to its ability to handle high numbers of prefixes with extensive reachability and administrative information in a very scalable and stable manner.</t>
+      <t>Due to the way iBGP operates it is either necessary to deploy routers in a full iBGP mesh configuration or to introduce a administrative point(s) to distribute the routing information around the network.  These administrative reference points are called Route-Reflectors.  Route-Reflectors have be used for many years, however, with the advent of new technologies such as virtualisation there is a need to be able to benchmark this function is a consistent manner to provide comparisons between implementations.  This document covers how to provide an accurate BGP route-reflector benchmark for both physical and virtual implementations of the funtion.</t>
+ 
+  		<t>This document defines the methodology for benchmarking the convergence performance of BGP Route-Reflectors
+  		in order to allow a valid,
+  		fair, comparative analysis of Route-Reflector implementations in a representative
+  		sample of common deployment scenarios.  The methodology will assume that the
+  		Device Under Test (DUT) is a 'black box' and unknown to the tester.  Each 
+  		scenario will be considered to be complete when the Route-Reflector has achieved 
+  		convergence, which means it received, processed and completed sending all prefixes
+  		to its peers.  This benchmark will not include the installation of selected prefixes into the FIB table.</t>
+  		<t>The following BGP address-families are in-scope for this
+  		document: 
+  		<list style="symbols">
+  			<t>ipv4 (AFI 1, SAFI 66)</t>
+  			<t>ipv6 (AFI 2, SAFI )</t>
+  			<t>vpnv4 (AFI 1, SAFI 128)</t>
+  			<t>vpnv6 (AFI 2, SAFI 128)</t>
+  		</list>
+  		Other address-families are excluded to ensure a level of consistency between
+  		Route-Reflector implementations.
+  	</t>
+  	<t>Other BGP features such as RT-Constraint and Add-Path are out of scope of this document and should be disabled in any tests</t>
+  	
+  	</section>
+
+      <section title="Requirements Language">
+        <t>The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
+        "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this
+        document are to be interpreted as described in <xref
+        target="RFC2119">RFC 2119</xref>.</t>
+        <t>Additional Terminology used in this document is defined in 
+        <xref target="RFC4098">[RFC4098]</xref> and extended by 
+        the terminology section of this document</t>
+        
+      </section>
+      <section title="Terminology">
+      <t><list style="hanging" hangIndent="16">
+      <t hangText="Standing Start">Where the DUT has completed its boot procedure and is stable and all BGP sessions are in the ESTABLISHED state but no prefixes are being advertised from the tester</t>
+      <t hangText="Cold Start">Where the DUT has completed its boot procedure and is stable and all BGP sessions are in the IDLE state due to them being shutdown on the tester device</t>
+      </list>
+      </t>
+      </section>
+      
+      <section title="Physical Test Setup">
+       <t>The following diagram details the physical topology for the 
+        testing.  The tester devices must be equipped with sufficient resources
+        in order to ensure they do not create a bottleneck on any of the tests
+        defined within this document.  The sending and receiving test devices have
+        been separated in order to ensure that the transmission of prefixes is 
+        not hampered by the reception and processing of prefixes.
+        <figure align="center" anchor="physical_topology">
+        <preamble></preamble>
+        <artwork align="center"><![CDATA[
++-------------+           +-------------+           +-------------+
+|             +           +             +           +             |
+|             +    10G    +             +    10G    +             |
+|   TESTER1   +-----------+     DUT     +-----------+   TESTER2   |
+|             +           +             +           +             |
+|             +           +             +           +             |
++-------------+           +-------------+           +-------------+
+            ]]></artwork>
+             <postamble>Physical Test Topology</postamble>
+      </figure></t>
+      </section>
+      
+      <section title="Issues to consider when testing">
+      <t>
+      	BGP is a protocol based on TCP.  As such it uses the inherent features available in TCP to ensure transmission of information such as TCP window sizing.  The understanding of this is important when creating a testing setup and methodology which accurately tests the DUT as opposed to being hampered by any limitations in testing equipment or other underlying protocols.
+</t>
+<t>In order to ensure that TCP windowing does not adversely effect the distribution of BGP routing update information during the test it is necessary to ensure that adequate physical bandwidth is available between the tester devices and the DUT.  This should be achieved through the provision of 1 x 10 GigabitEthernet interfaces between Tester 1 and the DUT and 1 x 10 Gigabit Ethernet interfaces between Tester 2 and the DUT.  This will remove the chance for there to be a bandwidth bottleneck when advertising multiple BGP updates simultaneously.</t>
+
+<t>The IP MTU value on all interfaces between the DUT and the testers should be set to 9000 bytes to ensure consistency in results.</t>
+
+<t>The TCP MSS should be set to the maximum available and recorded. The TCP MSS should match on all devices tested, as such the lowest common denominator TCP MSS between all implementations of route-reflectors being tested should be used.</t>
+
+<t>Another important consideration is the behaviour of any testing devices being utilised to obtain the benchmarking figures.  In order to provide clear and unambiguous guideance this document will detail the requirements on the testing devices as well.</t>
+
+<t>Tester 1 and Tester 2 may be different physical units however they must be able to communicate with one and other in order to provide the resulting measurement.  In the case where Tester 1 and Tester 2 and the same physical device there must be the ability to ring-fence the required memory, CPU and I/O resources to logically serarate Tester 1 from Tester 2.</t>
+
+<t>Test devices should be able to support the following features:
+
+<list style="symbols">
+          <t>The ability to bring multiple BGP peering sessions into an ESTABLISHED state without advertising any prefix/path information</t>
+
+          <t>The ability to advertise all BGP prefix/path information immediately and simultaneously without grouping advertisements into smaller sections of ramping up the advertisements over time.</t>
+          <t>The ability to count the number of prefixes advertised.</t>
+          <t>The ability to count the number of prefixes received.  Best-path processing or FIB installation are not required on the tester devices.</t>
+          <t>The ability to start the test when the prefixes are advertised and to end the test when all prefixes are received, providing a time between these two points.</t>
+        </list> 
+</t>
+
+      </section>
+      <section title="Route Profiles">
+      <t>
+The profile of the routing information that is used may result in wildly different results depending on the Route-Reflectors internal implementations of the BGP protocol.  In order to provide meaningful results that can be used for accurate benchmarking of Route-Reflector implementations against one and other and to provide results capable of relating to real world deployments of the DUT there are a number of specific route profiles that should be tested.
+
+Broadly these profiles fall into two categories.  
+
+<list style="hanging">
+<t hangText="Synthetic Prefixes"><vspace blankLines="0" />!!!GREG TO UPDATE!!! Those generated according to an algorithm within the tester in a linear fashion where this is a bounded set of 100,000 prefixes.  The prefixes should be in the following distribution; for IPv4, 1,000 x /8, 10,000 x /16, 39,000 x /19, 50,000 x /24 .  For IPv6, DISTRIBUTION HERE.  Each prefix should contain 2 ASNs in the AS_PATH.  50% of the prefixes should rely on the same next-hop IP address and the remaining 50% should have a unique next-hop IP address.  Each prefix should contain two BGP community values.</t>
+
+<t hangText="Global Internet Table"><vspace blankLines="0" />A 'recording' of the current Global Internet Routing table should be played back as the source feed providing a realistic prefix distribution, AS_PATH distribution, a realistic next-hop distribution and a realistic number of communities per prefix.  It is expected that this sample-set will change with each test as the Global Internet Table will change, however, the same sample-set must be used for every route-reflector taking part in a comparative benchmarking activity.</t>
+</list>
+
+
+The profiles that should be tested are
+
+<list style="symbols">
+<t>IPv4 <list style="symbols">
+	<t>Synthetic</t>
+	<t>Global Internet Table</t>
+	</list></t>
+<t>IPv6 <list style="symbols">
+	<t>Synthetic</t>
+	<t>Global Internet Table</t>
+	</list></t>
+<t>VPNv4 <list style="symbols">
+	<t>Synthetic with RD per ASN (With and without RT constraint?)</t>
+	<t>Synthetic with RD per Router-ID (With and without RT constraint?)</t>
+	</list></t>
+<t>VPNv6 <list style="symbols">
+	<t>Synthetic with RD per ASN (With and without RT constraint?)</t>
+	<t>Synthetic with RD per Router-ID (With and without RT constraint?)</t>
+	</list></t>
+</list>
+
+The profiles should be tested individually and then in groups where the groupings are as follows
+
+<list style="symbols">
+<t>IPv4+IPv6</t>
+<t>VPNv4+VPNv6</t>
+<t>IPv4+VPNv4</t>
+<t>IPv6+VPNv6</t>
+<t>IPv4+IPv6+VPNv4+VPNv6</t>
+</list>
+
+      </t>
+      </section>
+      
+      
+      <section title="Test Scenarios" anchor="test_scenarios">
+      <t>Route-Reflectors typically operate in two situations:
+      <list style="numbers">
+      <t>Where they are processing a set of updates from a single iBGP neighbour and reflecting it to multiple iBGP clients</t>
+      <t>Where they are processing multiple sets of updates from a number of iBGP neighbours and reflecting them to multiple iBGP clients</t>
+      </list>
+      </t>
+      </section>
+      
+ 
+    
+    <section title="Results Matrix">
+    <texttable anchor="results_matrix" title="Results Matrix">
+          <preamble>This table should be used to provide the results of each Route-Reflector tested</preamble>
+
+          <ttcol align="center">Address-Family</ttcol>
+          <ttcol align="center">Route-Profile</ttcol>
+          <ttcol align="center">RD Type</ttcol>
+          <ttcol align="center">Standing/Cold Start</ttcol>
+          <ttcol align="center">1</ttcol>
+          <ttcol align="center">10</ttcol>
+          <ttcol align="center">50</ttcol>
+          <ttcol align="center">100</ttcol>
+          <ttcol align="center">250</ttcol>
+          <ttcol align="center">1000</ttcol>
+          <ttcol align="center">2500</ttcol>
+          <ttcol align="center">5000</ttcol>
+
+<c>IPv4</c><c>Synth</c><c></c><c>SS</c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c>
+<c>IPv4</c><c>Synth</c><c></c><c>CS</c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c>
+<c>IPv4</c><c>GIT</c><c></c><c>SS</c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c>
+<c>IPv4</c><c>GIT</c><c></c><c>CS</c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c>
+          
+<c>IPv6</c><c>Synth</c><c></c><c>SS</c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c>
+<c>IPv6</c><c>Synth</c><c></c><c>CS</c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c>
+<c>IPv6</c><c>GIT</c><c></c><c>SS</c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c>
+<c>IPv6</c><c>GIT</c><c></c><c>CS</c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c>
+          
+<c>VPNv4</c><c>Synth</c><c>ASN</c><c>SS</c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c>
+<c>VPNv4</c><c>Synth</c><c>ASN</c><c>CS</c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c>
+<c>VPNv4</c><c>Synth</c><c>R-ID</c><c>SS</c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c>
+<c>VPNv4</c><c>Synth</c><c>R-ID</c><c>CS</c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c>
+          
+<c>VPNv6</c><c>Synth</c><c>ASN</c><c>SS</c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c>
+<c>VPNv6</c><c>Synth</c><c>ASN</c><c>CS</c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c>
+<c>VPNv6</c><c>Synth</c><c>R-ID</c><c>SS</c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c>
+<c>VPNv6</c><c>Synth</c><c>R-ID</c><c>CS</c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c>
+          
+<c>IPv4+IPv6</c><c>Synth</c><c></c><c>SS</c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c>
+<c>IPv4+IPv6</c><c>Synth</c><c></c><c>CS</c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c>
+<c>IPv4+IPv6</c><c>GIT</c><c></c><c>SS</c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c>
+<c>IPv4+IPv6</c><c>GIT</c><c></c><c>CS</c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c>
+
+<c>VPNv4 + VPNv6</c> <c>Synth</c> <c>ASN</c> <c>SS</c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c>
+<c>VPNv4 + VPNv6</c><c>Synth</c><c>ASN</c><c>CS</c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c>
+<c>VPNv4 + VPNv6</c><c>Synth</c><c>R-ID</c><c>SS</c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c>
+<c>VPNv4 + VPNv6</c><c>Synth</c><c>R-ID</c><c>CS</c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c>
+
+<c>IPv4 + VPNv4</c> <c>IPv4 Synth + VPNv4 Synth</c> <c>ASN</c> <c>SS</c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c>
+<c>IPv4 + VPNv4</c><c>IPv4 Synth + VPNv4 Synth</c><c>ASN</c><c>CS</c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c>
+<c>IPv4 + VPNv4</c><c>IPv4 Synth + VPNv4 Synth</c><c>R-ID</c><c>SS</c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c>
+<c>IPv4 + VPNv4</c><c>IPv4 Synth + VPNv4 Synth</c><c>R-ID</c><c>CS</c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c>
+<c>IPv4 + VPNv4</c> <c>IPv4 GIT + VPNv4 Synth</c> <c>ASN</c> <c>SS</c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c>
+<c>IPv4 + VPNv4</c><c>IPv4 GIT + VPNv4 Synth</c><c>ASN</c><c>CS</c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c>
+<c>IPv4 + VPNv4</c><c>IPv4 GIT + VPNv4 Synth</c><c>R-ID</c><c>SS</c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c>
+<c>IPv4 + VPNv4</c><c>IPv4 GIT + VPNv4 Synth</c><c>R-ID</c><c>CS</c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c>
+
+<c>IPv6 + VPNv6</c> <c>IPv6 Synth + VPNv6 Synth</c> <c>ASN</c> <c>SS</c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c>
+<c>IPv6 + VPNv6</c><c>IPv6 Synth + VPNv6 Synth</c><c>ASN</c><c>CS</c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c>
+<c>IPv6 + VPNv6</c><c>IPv6 Synth + VPNv6 Synth</c><c>R-ID</c><c>SS</c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c>
+<c>IPv6 + VPNv6</c><c>IPv6 Synth + VPNv6 Synth</c><c>R-ID</c><c>CS</c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c>
+<c>IPv6 + VPNv6</c> <c>IPv6 GIT + VPNv6 Synth</c> <c>ASN</c> <c>SS</c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c>
+<c>IPv6 + VPNv6</c><c>IPv6 GIT + VPNv6 Synth</c><c>ASN</c><c>CS</c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c>
+<c>IPv6 + VPNv6</c><c>IPv6 GIT + VPNv6 Synth</c><c>R-ID</c><c>SS</c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c>
+<c>IPv6 + VPNv6</c><c>IPv6 GIT + VPNv6 Synth</c><c>R-ID</c><c>CS</c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c>
+
+<c>IPv4 + IPv6 + VPNv4 + VPNv6</c><c>IPv4/6 Synth + VPNv4/6 Synth</c><c>ASN</c><c>SS</c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c>
+<c>IPv4 + IPv6 + VPNv4 + VPNv6</c><c>IPv4/6 Synth + VPNv4/6 Synth</c><c>ASN</c><c>CS</c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c>
+<c>IPv4 + IPv6 + VPNv4 + VPNv6</c><c>IPv4/6 Synth + VPNv4/6 Synth</c><c>R-ID</c><c>SS</c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c>
+<c>IPv4 + IPv6 + VPNv4 + VPNv6</c><c>IPv4/6 Synth + VPNv4/6 Synth</c><c>R-ID</c><c>CS</c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c>
+<c>IPv4 + IPv6 + VPNv4 + VPNv6</c><c>IPv4/6 GIT + VPNv4/6 Synth</c><c>ASN</c><c>SS</c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c>
+<c>IPv4 + IPv6 + VPNv4 + VPNv6</c><c>IPv4/6 GIT + VPNv4/6 Synth</c><c>ASN</c><c>CS</c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c>
+<c>IPv4 + IPv6 + VPNv4 + VPNv6</c><c>IPv4/6 GIT + VPNv4/6 Synth</c><c>R-ID</c><c>SS</c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c>
+<c>IPv4 + IPv6 + VPNv4 + VPNv6</c><c>IPv4/6 GIT + VPNv4/6 Synth</c><c>R-ID</c><c>CS</c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c> <c></c>
+
+          <postamble></postamble>
+        </texttable>
+    </section>
+
+   
+
+   
+
+
+    <?rfc needLines="8" ?>
+
+ 
+
+
+
+    <section anchor="Contributors" title="Contributors">
+    <t>The authors would like to thank G. Van de Velde, Nokia for his reviews and contributions</t>
+    </section>
+
+    <section anchor="IANA" title="IANA Considerations">
+      <t>This memo includes no request to IANA.</t>
+
+      <t>All drafts are required to have an IANA considerations section (see
+      <xref target="I-D.narten-iana-considerations-rfc2434bis">the update of
+      RFC 2434</xref> for a guide). If the draft does not require IANA to do
+      anything, the section contains an explicit statement that this is the
+      case (as above). If there are no requirements for IANA, the section will
+      be removed during conversion into an RFC by the RFC Editor.</t>
+    </section>
+
+    <section anchor="Security" title="Security Considerations">
+      <t>All drafts are required to have a security considerations section.
+      See <xref target="RFC3552">RFC 3552</xref> for a guide.</t>
+    </section>
+  </middle>
+
+  <!--  *****BACK MATTER ***** -->
+
+  <back>
+    <!-- References split into informative and normative -->
+
+    <!-- There are 2 ways to insert reference entries from the citation libraries:
+     1. define an ENTITY at the top, and use "ampersand character"RFC2629; here (as shown)
+     2. simply use a PI "less than character"?rfc include="reference.RFC.2119.xml"?> here
+        (for I-Ds: include="reference.I-D.narten-iana-considerations-rfc2434bis.xml")
+
+     Both are cited textually in the same manner: by using xref elements.
+     If you use the PI option, xml2rfc will, by default, try to find included files in the same
+     directory as the including file. You can also define the XML_LIBRARY environment variable
+     with a value containing a set of directories to search.  These can be either in the local
+     filing system or remote ones accessed by http (http://domain/dir/... ).-->
+
+    <references title="Normative References">
+      <!--?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.2119.xml"?-->
+      &RFC2119;
+
+      <reference anchor="min_ref">
+        <!-- the following is the minimum to make xml2rfc happy -->
+
+        <front>
+          <title>Minimal Reference</title>
+
+          <author initials="authInitials" surname="authSurName">
+            <organization></organization>
+          </author>
+
+          <date year="2006" />
+        </front>
+      </reference>
+    </references>
+
+    <references title="Informative References">
+      <!-- Here we use entities that we defined at the beginning. -->
+
+      &RFC2629;
+
+      &RFC3552;
+      
+      &RFC4098;
+
+      &I-D.narten-iana-considerations-rfc2434bis;
+
+      <!-- A reference written by by an organization not a person. -->
+
+      <reference anchor="DOMINATION"
+                 target="http://www.example.com/dominator.html">
+        <front>
+          <title>Ultimate Plan for Taking Over the World</title>
+
+          <author>
+            <organization>Mad Dominators, Inc.</organization>
+          </author>
+
+          <date year="1984" />
+        </front>
+      </reference>
+    </references>
+
+    <section anchor="app-additional" title="Additional Stuff">
+      <t>This becomes an Appendix.</t>
+    </section>
+
+    <!-- Change Log
+
+v00 2006-03-15  JGC   Initial version
+
+
+  -->
+  </back>
+</rfc>
